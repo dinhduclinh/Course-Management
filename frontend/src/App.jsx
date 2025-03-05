@@ -1,4 +1,3 @@
-// frontend/src/App.jsx
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -11,6 +10,7 @@ import LoginPopup from "./components/LoginPopup";
 import Register from "./components/Register";
 import ChangePassword from "./pages/ChangePassword";
 import CourseManagement from "./pages/CourseManagement";
+import AddCourse from "./pages/AddCourse";
 
 const App = () => {
   const isAdmin = () => {
@@ -26,8 +26,12 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route
-          path="/add-course"
+          path="/course-management"
           element={isAdmin() ? <CourseManagement /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/add-course"
+          element={isAdmin() ? <AddCourse /> : <Navigate to="/" />}
         />
       </Routes>
     </Router>

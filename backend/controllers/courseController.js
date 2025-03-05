@@ -1,4 +1,3 @@
-// backend/controllers/courseController.js
 import Course from "../models/Course.js";
 
 export const getCourses = async (req, res) => {

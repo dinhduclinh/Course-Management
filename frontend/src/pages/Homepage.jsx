@@ -1,4 +1,3 @@
-// frontend/src/pages/Homepage.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
@@ -107,7 +106,7 @@ const Homepage = () => {
           <div className="nav-links">
             {user && user.roleid === 1 && (
               <>
-                <a href="/add-course">Quản lý khóa học</a>
+                <a href="/course-management">Quản lý khóa học</a>
                 <a href="#" onClick={() => setShowEditAnnouncement(true)}>
                   Sửa thông báo
                 </a>

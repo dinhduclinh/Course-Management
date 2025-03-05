@@ -1,4 +1,3 @@
-// backend/models/Course.js
 import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
@@ -13,5 +12,4 @@ const courseSchema = new mongoose.Schema({
 });
 
 const Course = mongoose.model("Course", courseSchema, "Courses");
-
 export default Course;

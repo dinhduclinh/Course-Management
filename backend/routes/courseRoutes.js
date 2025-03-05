@@ -15,9 +15,9 @@ import {
 const router = express.Router();
 
 router.get("/", getCourses);
-router.post("/", authMiddleware, adminMiddleware, createCourse);
+router.post("/", createCourse);
 router.get("/category/:categoryid", getCoursesByCategory);
-router.put("/:id", authMiddleware, adminMiddleware, updateCourse);
-router.delete("/:id", authMiddleware, adminMiddleware, deleteCourse);
+router.put("/:id", updateCourse);
+router.delete("/:id", deleteCourse);
 
 export default router;

@@ -1,0 +1,25 @@
+/* Sidebar */
+.sidebar {
+  width: 16%;
+  height: 100vh;
+  background-color: rgb(65, 51, 85);
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+.sidebar .nav-link {
+  color: white !important;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .nav-link:hover {
+  background-color: #482250;
+}
+
+.sidebar .nav-link.active {
+  background-color: #1f2a30;
+}

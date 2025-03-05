@@ -1,0 +1,43 @@
+.welcome-message {
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #9f96c5;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    padding: 10px 0;
+}
+
+.welcome-message span {
+    display: inline-block;
+    animation: scroll 15s linear infinite, colorChange 5s linear infinite;
+    padding-left: 100%;
+    -webkit-animation: scroll 15s linear infinite, colorChange 5s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes colorChange {
+    0% {
+        color: #FF5733;
+    }
+    25% {
+        color: #378c44;
+    }
+    50% {
+        color: #3357FF;
+    }
+    75% {
+        color: #FF33A1;
+    }
+    100% {
+        color: #FF5733;
+    }
+}

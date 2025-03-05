@@ -1,0 +1,186 @@
+/* ===== Reset CSS ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ===== Container chính ===== */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    overflow: hidden;
+    position: relative;
+}
+
+/* ===== Background Animation ===== */
+.register-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    animation: animateBackground 10s linear infinite;
+}
+
+@keyframes animateBackground {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* ===== Khung đăng ký ===== */
+.register-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 1000px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Tiêu đề ===== */
+.register-box h2 {
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ===== Form đăng ký ===== */
+.register-form input,
+.register-form select {
+    width: 100%;
+    padding: 15px;
+    margin: 15px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+    border-color: #6e8efb;
+    box-shadow: 0 0 10px rgba(110, 142, 251, 0.5);
+    outline: none;
+}
+
+/* ===== Form Row ===== */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-row input,
+.form-row select {
+    width: 100%;
+}
+
+/* ===== Button ===== */
+.register-button {
+    width: 100%;
+    padding: 15px;
+    background: #6e8efb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-button:hover {
+    background: #5a77d1;
+    transform: translateY(-2px);
+}
+
+.register-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: width 0.3s, height 0.3s;
+}
+
+.register-button:active::before {
+    width: 120%;
+    height: 120%;
+}
+
+/* ===== Thông báo lỗi ===== */
+.error-message {
+    color: #e74c3c;
+    font-size: 16px;
+    margin-bottom: 15px;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* ===== Loading Spinner ===== */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #6e8efb;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/* ===== Return Home Link ===== */
+.return-home-link {
+    margin-top: 20px; /* Added margin */
+    font-size: 16px; /* Maintained font size */
+}
+
+.return-home-link a {
+    color: #6e8efb;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.return-home-link a:hover {
+    color: #5a77d1;
+}

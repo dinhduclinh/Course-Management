@@ -3,7 +3,10 @@ import Announcement from "../models/Announcement.js";
 // Lấy thông báo duy nhất từ MongoDB
 export const getAnnouncement = async (req, res) => {
   try {
-    const announcement = await Announcement.findOne(); // Luôn lấy thông báo duy nhất
+    const announcement = await Announcement.findOne();
+    if (!announcement) {
+      return res.json({ message: "Chưa có thông báo nào." });
+    }
     res.json(announcement);
   } catch (error) {
     res
@@ -28,7 +31,9 @@ export const updateAnnouncement = async (req, res) => {
     }
 
     await announcement.save();
-    res.status(200).json(announcement);
+    res
+      .status(200)
+      .json({ success: true, message: "Thông báo đã được cập nhật!" });
   } catch (error) {
     res
       .status(500)

@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.get("/", getAnnouncement); 
-router.post("/", updateAnnouncement); 
+router.put("/", updateAnnouncement); 
 
 export default router;

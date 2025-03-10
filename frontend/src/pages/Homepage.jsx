@@ -6,7 +6,8 @@ import LoginPopup from "../components/LoginPopup";
 import EditAnnouncementPopup from "../components/EditAnnouncementPopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
-import "../css/Homepage.css"; // Import CSS file
+import "../css/Homepage.css";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   const [courses, setCourses] = useState([]);
@@ -44,7 +45,6 @@ const Homepage = () => {
   }, [selectedCategory]);
 
   useEffect(() => {
-    // Khôi phục trạng thái đăng nhập từ localStorage khi trang được tải lại
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -72,7 +72,7 @@ const Homepage = () => {
   const handleLogout = () => {
     setUser(null);
     setShowDropdown(false);
-    localStorage.removeItem("user"); // Xóa thông tin người dùng khỏi localStorage
+    localStorage.removeItem("user");
   };
 
   const toggleDropdown = () => {
@@ -156,11 +156,13 @@ const Homepage = () => {
             ) : (
               courses.map((course) => (
                 <div key={course._id} className="course-item">
-                  <img
-                    src={course.img || "https://via.placeholder.com/300"}
-                    alt={course.courseName}
-                  />
-                  <h5>{course.courseName}</h5>
+                  <Link to={`/course/${course.slug}`}>
+                    <img
+                      src={course.img || "https://via.placeholder.com/300"}
+                      alt={course.courseName}
+                    />
+                    <h5>{course.courseName}</h5>
+                  </Link>
                   <div className="course-details">
                     <p>
                       <strong>Thời lượng:</strong> {course.duration}

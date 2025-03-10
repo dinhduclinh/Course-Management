@@ -1,4 +1,3 @@
-// backend/routes/courseRoutes.js
 import express from "express";
 import {
   getCourses,
@@ -6,18 +5,28 @@ import {
   getCoursesByCategory,
   updateCourse,
   deleteCourse,
+  getCourseBySlug,
+  uploadFile,
+  downloadFile,
+  updateCourseContent,
 } from "../controllers/courseController.js";
 import {
   authMiddleware,
   adminMiddleware,
 } from "../middleware/authMiddleware.js";
+import multer from "multer";
 
 const router = express.Router();
+const upload = multer({ dest: "uploads/" });
 
 router.get("/", getCourses);
 router.post("/", createCourse);
 router.get("/category/:categoryid", getCoursesByCategory);
-router.put("/:id", updateCourse);
-router.delete("/:id", deleteCourse);
+router.put("/:slug", updateCourse);
+router.delete("/:slug", deleteCourse);
+router.get("/slug/:slug", getCourseBySlug); // Ensure this route is correctly defined
+router.post("/:slug/upload", upload.single("file"), uploadFile);
+router.get("/:slug/download/:fileId", downloadFile);
+router.put("/:slug/content", updateCourseContent);
 
 export default router;

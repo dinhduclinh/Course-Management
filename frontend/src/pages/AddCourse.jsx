@@ -10,10 +10,11 @@ const AddCourse = () => {
     duration: "",
     instructor: "",
     img: "",
-    courseID: "",
     oprice: "",
     price: "",
     categoryid: "",
+    description: "",
+    details: "",
   });
   const [newCategory, setNewCategory] = useState({
     categoryid: "",
@@ -50,10 +51,11 @@ const AddCourse = () => {
         duration: "",
         instructor: "",
         img: "",
-        courseID: "",
         oprice: "",
         price: "",
         categoryid: "",
+        description: "",
+        details: "",
       });
     } catch (error) {
       console.error("Lỗi khi thêm khóa học:", error);
@@ -174,18 +176,6 @@ const AddCourse = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="courseID">ID khóa học</label>
-            <input
-              type="number"
-              id="courseID"
-              name="courseID"
-              placeholder="ID khóa học"
-              value={newCourse.courseID}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="oprice">Giá gốc</label>
             <input
               type="number"
@@ -226,11 +216,33 @@ const AddCourse = () => {
               ))}
             </select>
           </div>
+          <div className="form-group">
+            <label htmlFor="description">Mô tả</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Mô tả"
+              value={newCourse.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="details">Chi tiết</label>
+            <textarea
+              id="details"
+              name="details"
+              placeholder="Chi tiết"
+              value={newCourse.details}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <button type="submit" className="btn-save">
             Thêm khóa học
           </button>
         </form>
-        <h2>Quản lý danh mục</h2>
+        <h2>Thêm danh mục</h2>
         <form className="category-form" onSubmit={handleAddCategory}>
           <div className="form-group">
             <label htmlFor="categoryid">ID danh mục</label>
@@ -257,7 +269,7 @@ const AddCourse = () => {
             />
           </div>
           <button type="submit" className="btn-save">
-            Thêm danh mục
+            Submit
           </button>
         </form>
         <div className="category-list">

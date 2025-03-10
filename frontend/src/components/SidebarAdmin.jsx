@@ -6,7 +6,7 @@ const SidebarAdmin = () => {
   return (
     <div className="sidebar-admin">
       <Link to="/course-management" className="nav-link">
-        Quản lý khóa học
+        Danh sách khóa học
       </Link>
       <Link to="/add-course" className="nav-link">
         Thêm khóa học

@@ -11,13 +11,13 @@ import Register from "./components/Register";
 import ChangePassword from "./pages/ChangePassword";
 import CourseManagement from "./pages/CourseManagement";
 import AddCourse from "./pages/AddCourse";
+import CourseDetail from "./pages/CourseDetail";
 
 const App = () => {
   const isAdmin = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     return user && user.roleid === 1;
   };
-
   return (
     <Router>
       <Routes>
@@ -33,6 +33,7 @@ const App = () => {
           path="/add-course"
           element={isAdmin() ? <AddCourse /> : <Navigate to="/" />}
         />
+        <Route path="/course/:slug" element={<CourseDetail />} />
       </Routes>
     </Router>
   );

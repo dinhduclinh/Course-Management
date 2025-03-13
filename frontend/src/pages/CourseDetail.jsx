@@ -14,7 +14,6 @@ const CourseDetail = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
-  const [showEditAnnouncement, setShowEditAnnouncement] = useState(false);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -35,6 +34,7 @@ const CourseDetail = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
     setIsAdmin(storedUser && storedUser.roleid === 1);
+
     fetchCourseDetails();
   }, [slug]);
 
@@ -50,12 +50,16 @@ const CourseDetail = () => {
     }
   };
 
-  const handleBuyCourse = () => {
-    alert("Khóa học đã được thêm vào giỏ hàng!");
-  };
-
-  const handleAddToCart = () => {
-    alert("Khóa học đã được thêm vào giỏ hàng!");
+  const handleEnroll = async () => {
+    try {
+      await axios.post(`http://localhost:9000/enrollments`, {
+        userId: user._id,
+        courseId: course._id,
+      });
+      alert("Đăng ký khóa học thành công!");
+    } catch (error) {
+      console.error("Lỗi khi đăng ký khóa học:", error);
+    }
   };
 
   if (loading) return <div className="loading">Chờ xíu...</div>;
@@ -80,7 +84,7 @@ const CourseDetail = () => {
               <strong>Giảng viên:</strong> {course.instructor}
             </p>
             <p className="course-price">
-              <strong>Giá gốc:</strong> <del>{course.oprice}đ</del>
+              <strong>Giá:</strong> <del>{course.oprice}đ</del>
               <strong className="discount-price"> {course.price}đ</strong>
             </p>
           </div>
@@ -112,12 +116,11 @@ const CourseDetail = () => {
             </button>
           )}
           <div className="course-actions">
-            <button className="btn-add-to-cart" onClick={handleAddToCart}>
-              Thêm vào giỏ hàng
-            </button>
-            <button className="btn-buy" onClick={handleBuyCourse}>
-              Thanh toán ngay
-            </button>
+            {user && !isAdmin && (
+              <button className="btn-enroll" onClick={handleEnroll}>
+                Đăng ký khóa học
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -81,15 +81,12 @@ export const deleteCourse = async (req, res) => {
 export const getCourseBySlug = async (req, res) => {
   const { slug } = req.params;
   try {
-    console.log(`Fetching course with slug: ${slug}`);
     const course = await Course.findOne({ slug });
     if (!course) {
-      console.log(`Course with slug ${slug} not found`);
       return res.status(404).json({ message: "Course not found" });
     }
     res.status(200).json(course);
   } catch (error) {
-    console.error(`Error fetching course with slug ${slug}:`, error);
     res.status(500).json({ message: error.message });
   }
 };

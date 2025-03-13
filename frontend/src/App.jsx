@@ -12,12 +12,19 @@ import ChangePassword from "./pages/ChangePassword";
 import CourseManagement from "./pages/CourseManagement";
 import AddCourse from "./pages/AddCourse";
 import CourseDetail from "./pages/CourseDetail";
+import EnrollmentManagement from "./pages/EnrollmentManagement";
+import EnrolledCourses from "./pages/EnrolledCourses";
 
 const App = () => {
   const isAdmin = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     return user && user.roleid === 1;
   };
+
+  const ProtectedRoute = ({ element }) => {
+    return isAdmin() ? element : <Navigate to="/" />;
+  };
+
   return (
     <Router>
       <Routes>
@@ -27,13 +34,18 @@ const App = () => {
         <Route path="/change-password" element={<ChangePassword />} />
         <Route
           path="/course-management"
-          element={isAdmin() ? <CourseManagement /> : <Navigate to="/" />}
+          element={<ProtectedRoute element={<CourseManagement />} />}
         />
         <Route
           path="/add-course"
-          element={isAdmin() ? <AddCourse /> : <Navigate to="/" />}
+          element={<ProtectedRoute element={<AddCourse />} />}
+        />
+        <Route
+          path="/enrollment-management"
+          element={<ProtectedRoute element={<EnrollmentManagement />} />}
         />
         <Route path="/course/:slug" element={<CourseDetail />} />
+        <Route path="/enrolled-courses" element={<EnrolledCourses />} />
       </Routes>
     </Router>
   );

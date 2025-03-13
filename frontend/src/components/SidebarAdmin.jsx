@@ -11,6 +11,9 @@ const SidebarAdmin = () => {
       <Link to="/add-course" className="nav-link">
         Thêm khóa học
       </Link>
+      <Link to="/enrollment-management" className="nav-link">
+        Quản lý đăng ký khóa học
+      </Link>
       <Link to="/" className="nav-link return-home-link">
         Trở về trang chủ
       </Link>

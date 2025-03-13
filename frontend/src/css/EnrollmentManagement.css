@@ -1,0 +1,64 @@
+/* General styles for the enrollment management container */
+.enrollment-management-container {
+  padding: 20px;
+  flex: 1;
+  background-color: #f9f9f9;
+  margin-left: 220px; /* Adjust this value based on the width of the sidebar */
+}
+
+/* Styles for the table container */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+/* Styles for the table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th, .table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Styles for the delete button */
+.btn-delete {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-delete:hover {
+  background-color: #ff1a1a;
+}
+
+/* Styles for the loading indicator */
+.loading {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Styles for the error message */
+.error {
+  color: red;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
+}

@@ -15,7 +15,6 @@ const Navbar = ({ fullWidth }) => {
   const [announcementMessage, setAnnouncementMessage] = useState(
     "Đang tải thông báo..."
   );
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,9 +59,17 @@ const Navbar = ({ fullWidth }) => {
     setAnnouncementMessage(newMessage);
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <nav className={`navbar ${fullWidth ? "full-width" : ""}`}>
-      <div className="logo" style={{ marginLeft: "20px" }}>
+      <div
+        className="logo"
+        style={{ marginLeft: "20px", cursor: "pointer" }}
+        onClick={handleLogoClick}
+      >
         linhddhe173104
       </div>
       <input type="text" className="search-bar" placeholder="Tìm kiếm..." />
@@ -75,7 +82,7 @@ const Navbar = ({ fullWidth }) => {
             </a>
           </>
         )}
-        <a href="#">Khóa học của tôi</a>
+        <a href="/enrolled-courses">Khóa học của tôi</a>
         <a href="#">Học liệu</a>
         <a href="#">Coupon</a>
         {user ? (
@@ -109,14 +116,12 @@ const Navbar = ({ fullWidth }) => {
         )}
         <span className="cart-icon">🛒</span>
       </div>
-
       {showLogin && (
         <LoginPopup
           onClose={() => setShowLogin(false)}
           onLoginSuccess={handleLoginSuccess}
         />
       )}
-
       {showEditAnnouncement && (
         <EditAnnouncementPopup
           onClose={() => setShowEditAnnouncement(false)}

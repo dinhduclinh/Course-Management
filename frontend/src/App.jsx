@@ -17,6 +17,7 @@ import EnrolledCourses from "./pages/EnrolledCourses";
 import Profile from "./pages/Profile";
 import UserManagement from "./pages/UserManagement";
 import AddUser from "./pages/AddUser";
+import AddEnrollment from "./pages/AddEnrollment";
 
 const App = () => {
   const isAdmin = () => {
@@ -57,6 +58,10 @@ const App = () => {
         <Route
           path="/add-user"
           element={<ProtectedRoute element={<AddUser />} />}
+        />
+        <Route
+          path="/add-enrollment"
+          element={<ProtectedRoute element={<AddEnrollment />} />}
         />
       </Routes>
     </Router>

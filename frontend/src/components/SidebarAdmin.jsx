@@ -56,6 +56,9 @@ const SidebarAdmin = () => {
           <Link to="/enrollment-management" className="nav-link">
             Danh sách đăng ký
           </Link>
+          <Link to="/add-enrollment" className="nav-link">
+            Thêm đăng ký khóa học
+          </Link>
         </div>
       </div>
       <div className="management-section">

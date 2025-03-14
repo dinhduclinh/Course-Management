@@ -137,3 +137,15 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ message: "Lỗi khi lấy danh sách người dùng!" });
   }
 };
+
+export const searchUsers = async (req, res) => {
+  const { query } = req.query;
+  try {
+    const users = await Account.find({
+      fullname: { $regex: query, $options: "i" },
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi tìm kiếm người dùng!" });
+  }
+};

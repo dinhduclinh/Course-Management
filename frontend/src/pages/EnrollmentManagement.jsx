@@ -38,7 +38,7 @@ const EnrollmentManagement = () => {
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading">Chờ xíu...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
@@ -54,7 +54,7 @@ const EnrollmentManagement = () => {
                 <th>Tên người dùng</th>
                 <th>Tên khóa học</th>
                 <th>Ngày đăng ký</th>
-                <th>Hành động</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

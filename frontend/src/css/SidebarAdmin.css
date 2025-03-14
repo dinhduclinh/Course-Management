@@ -1,36 +1,68 @@
-/* frontend/src/css/SidebarAdmin.css */
 .sidebar-admin {
-  width: 200px;
+  width: 220px;
   background: #2c3e50;
-  padding: 20px;
+  padding: 10px;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
 }
 
-.sidebar-admin .nav-link {
+.management-section {
+  margin-bottom: 5px;
+}
+
+.management-header {
   color: white;
   text-decoration: none;
-  padding: 10px;
-  margin: 10px 0;
-  display: block;
+  padding: 12px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #34495e;
   border-radius: 5px;
-  text-align: center;
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.sidebar-admin .nav-link:hover {
+.management-header:hover {
+  background: #1abc9c;
+}
+
+.management-links {
+  display: none;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.management-links.show {
+  display: flex;
+}
+
+.management-links .nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  margin: 3px 0;
+  display: block;
+  background: #34495e;
+  border-radius: 3px;
+  text-align: left;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.management-links .nav-link:hover {
   background: #1abc9c;
 }
 
 .sidebar-admin .return-home-link {
   margin-top: auto;
   background: #e74c3c;
+  text-align: center;
 }
 
 .sidebar-admin .return-home-link:hover {

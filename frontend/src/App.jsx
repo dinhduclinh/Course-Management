@@ -14,6 +14,9 @@ import AddCourse from "./pages/AddCourse";
 import CourseDetail from "./pages/CourseDetail";
 import EnrollmentManagement from "./pages/EnrollmentManagement";
 import EnrolledCourses from "./pages/EnrolledCourses";
+import Profile from "./pages/Profile";
+import UserManagement from "./pages/UserManagement";
+import AddUser from "./pages/AddUser";
 
 const App = () => {
   const isAdmin = () => {
@@ -46,6 +49,15 @@ const App = () => {
         />
         <Route path="/course/:slug" element={<CourseDetail />} />
         <Route path="/enrolled-courses" element={<EnrolledCourses />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/user-management"
+          element={<ProtectedRoute element={<UserManagement />} />}
+        />
+        <Route
+          path="/add-user"
+          element={<ProtectedRoute element={<AddUser />} />}
+        />
       </Routes>
     </Router>
   );

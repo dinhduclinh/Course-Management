@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaEdit, FaTrash } from "react-icons/fa"; // Import icons
 import SidebarAdmin from "../components/SidebarAdmin";
 import "../css/UserManagement.css";
 
@@ -21,7 +22,6 @@ const UserManagement = () => {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -97,18 +97,16 @@ const UserManagement = () => {
                   <td>{user.gender === 1 ? "Nam" : "Nữ"}</td>
                   <td>{user.roleid === 1 ? "Admin" : "User"}</td>
                   <td>
-                    <button
-                      className="user-management-btn-edit"
+                    <FaEdit
+                      className="icon-edit"
                       onClick={() => handleEditUser(user)}
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      className="user-management-btn-delete"
+                      title="Sửa"
+                    />
+                    <FaTrash
+                      className="icon-delete"
                       onClick={() => handleDeleteUser(user._id)}
-                    >
-                      Xóa
-                    </button>
+                      title="Xóa"
+                    />
                   </td>
                 </tr>
               ))}

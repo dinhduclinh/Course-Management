@@ -16,10 +16,6 @@ const AddCourse = () => {
     description: "",
     details: "",
   });
-  const [newCategory, setNewCategory] = useState({
-    categoryid: "",
-    categoryname: "",
-  });
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,10 +31,6 @@ const AddCourse = () => {
 
   const handleChange = (e) => {
     setNewCourse({ ...newCourse, [e.target.name]: e.target.value });
-  };
-
-  const handleCategoryChange = (e) => {
-    setNewCategory({ ...newCategory, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -59,65 +51,6 @@ const AddCourse = () => {
       });
     } catch (error) {
       console.error("Lỗi khi thêm khóa học:", error);
-    }
-  };
-
-  const handleAddCategory = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      await axios.post("http://localhost:9000/category", newCategory, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert("Thêm danh mục thành công!");
-      setNewCategory({ categoryid: "", categoryname: "" });
-      const response = await axios.get("http://localhost:9000/category");
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Lỗi khi thêm danh mục:", error);
-    }
-  };
-
-  const handleEditCategory = async (id) => {
-    const updatedCategory = prompt("Nhập tên danh mục mới:");
-    if (updatedCategory) {
-      try {
-        const token = localStorage.getItem("token");
-        await axios.put(
-          `http://localhost:9000/category/${id}`,
-          { categoryname: updatedCategory },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        alert("Cập nhật danh mục thành công!");
-        const response = await axios.get("http://localhost:9000/category");
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Lỗi khi cập nhật danh mục:", error);
-      }
-    }
-  };
-
-  const handleDeleteCategory = async (id) => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
-      try {
-        const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:9000/category/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        alert("Xóa danh mục thành công!");
-        const response = await axios.get("http://localhost:9000/category");
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Lỗi khi xóa danh mục:", error);
-      }
     }
   };
 
@@ -242,72 +175,6 @@ const AddCourse = () => {
             Thêm khóa học
           </button>
         </form>
-        <h2>Thêm danh mục</h2>
-        <form className="category-form" onSubmit={handleAddCategory}>
-          <div className="form-group">
-            <label htmlFor="categoryid">ID danh mục</label>
-            <input
-              type="text"
-              id="categoryid"
-              name="categoryid"
-              placeholder="ID danh mục"
-              value={newCategory.categoryid}
-              onChange={handleCategoryChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="categoryname">Tên danh mục</label>
-            <input
-              type="text"
-              id="categoryname"
-              name="categoryname"
-              placeholder="Tên danh mục"
-              value={newCategory.categoryname}
-              onChange={handleCategoryChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn-save">
-            Submit
-          </button>
-        </form>
-        <div className="category-list">
-          <h3>Danh sách danh mục</h3>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tên danh mục</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((category) => (
-                <tr key={category._id}>
-                  <td>{category.categoryid}</td>
-                  <td>{category.categoryname}</td>
-                  <td>
-                    <div className="action-buttons">
-                      <button
-                        className="btn-edit"
-                        onClick={() => handleEditCategory(category._id)}
-                      >
-                        Sửa
-                      </button>
-                      <button
-                        className="btn-delete"
-                        onClick={() => handleDeleteCategory(category._id)}
-                      >
-                        Xóa
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   );

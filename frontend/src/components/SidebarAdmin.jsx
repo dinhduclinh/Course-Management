@@ -34,6 +34,12 @@ const SidebarAdmin = () => {
           <Link to="/add-course" className="nav-link">
             Thêm khóa học
           </Link>
+          <Link to="/add-category" className="nav-link">
+            Thêm danh mục
+          </Link>
+          <Link to="/category-management" className="nav-link">
+            Quản lý danh mục
+          </Link>
         </div>
       </div>
       <div className="management-section">

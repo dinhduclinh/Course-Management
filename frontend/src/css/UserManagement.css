@@ -16,7 +16,8 @@
   margin-bottom: 20px;
 }
 
-.user-management-table th, .user-management-table td {
+.user-management-table th,
+.user-management-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -31,26 +32,28 @@
   background-color: #f1f1f1;
 }
 
-.user-management-btn-edit, .user-management-btn-delete {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
+.icon-edit,
+.icon-delete {
+  font-size: 20px;
   cursor: pointer;
-  border-radius: 4px;
   margin-right: 10px;
+  transition: color 0.2s ease-in-out;
 }
 
-.user-management-btn-edit:hover {
-  background-color: #0056b3;
+.icon-edit {
+  color: #007bff;
 }
 
-.user-management-btn-delete {
-  background-color: #ff4d4d;
+.icon-edit:hover {
+  color: #0056b3;
 }
 
-.user-management-btn-delete:hover {
-  background-color: #ff1a1a;
+.icon-delete {
+  color: #ff4d4d;
+}
+
+.icon-delete:hover {
+  color: #ff1a1a;
 }
 
 .user-management-form-container {
@@ -66,7 +69,8 @@
   margin-bottom: 5px;
 }
 
-.user-management-form-group input, .user-management-form-group select {
+.user-management-form-group input,
+.user-management-form-group select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;

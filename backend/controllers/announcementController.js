@@ -1,6 +1,5 @@
 import Announcement from "../models/Announcement.js";
 
-// Lấy thông báo duy nhất từ MongoDB
 export const getAnnouncement = async (req, res) => {
   try {
     const announcement = await Announcement.findOne();
@@ -15,18 +14,15 @@ export const getAnnouncement = async (req, res) => {
   }
 };
 
-// Cập nhật hoặc tạo mới thông báo
 export const updateAnnouncement = async (req, res) => {
   try {
     const { message } = req.body;
 
-    let announcement = await Announcement.findOne(); // Kiểm tra nếu đã có thông báo
+    let announcement = await Announcement.findOne(); 
 
     if (announcement) {
-      // Nếu có, cập nhật nội dung thông báo
       announcement.message = message;
     } else {
-      // Nếu chưa có, tạo một thông báo mới
       announcement = new Announcement({ message });
     }
 

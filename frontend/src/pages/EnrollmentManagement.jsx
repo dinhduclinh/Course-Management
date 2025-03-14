@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaTrash } from "react-icons/fa"; // Import the delete icon
 import SidebarAdmin from "../components/SidebarAdmin";
 import "../css/EnrollmentManagement.css";
 
@@ -19,7 +20,6 @@ const EnrollmentManagement = () => {
         setLoading(false);
       }
     };
-
     fetchEnrollments();
   }, []);
 
@@ -67,12 +67,11 @@ const EnrollmentManagement = () => {
                     {new Date(enrollment.enrolledAt).toLocaleDateString()}
                   </td>
                   <td>
-                    <button
-                      className="btn-delete"
+                    <FaTrash
+                      className="icon-delete"
                       onClick={() => handleDeleteEnrollment(enrollment._id)}
-                    >
-                      Xóa
-                    </button>
+                      title="Xóa"
+                    />
                   </td>
                 </tr>
               ))}

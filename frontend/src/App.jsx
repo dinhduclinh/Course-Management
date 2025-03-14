@@ -18,6 +18,8 @@ import Profile from "./pages/Profile";
 import UserManagement from "./pages/UserManagement";
 import AddUser from "./pages/AddUser";
 import AddEnrollment from "./pages/AddEnrollment";
+import AddCategory from "./pages/AddCategory";
+import CategoryManagement from "./pages/CategoryManagement";
 
 const App = () => {
   const isAdmin = () => {
@@ -62,6 +64,14 @@ const App = () => {
         <Route
           path="/add-enrollment"
           element={<ProtectedRoute element={<AddEnrollment />} />}
+        />
+        <Route
+          path="/add-category"
+          element={<ProtectedRoute element={<AddCategory />} />}
+        />
+        <Route
+          path="/category-management"
+          element={<ProtectedRoute element={<CategoryManagement />} />}
         />
       </Routes>
     </Router>

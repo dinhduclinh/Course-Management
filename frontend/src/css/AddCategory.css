@@ -1,0 +1,64 @@
+.add-category-container {
+  margin-left: 220px;
+  padding: 20px;
+  flex: 1;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.category-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto; /* Center the form */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.form-group label {
+  width: 200px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.form-group input,
+.form-group select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.btn-save {
+  width: 100px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  background: #2ecc71;
+  color: white;
+  border: none;
+}
+
+.btn-save:hover {
+  background: #27ae60;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaEdit, FaTrash } from "react-icons/fa"; // Import icons
 import SidebarAdmin from "../components/SidebarAdmin";
 import "../css/CourseManagement.css";
 
@@ -9,6 +10,7 @@ const CourseManagement = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editCourse, setEditCourse] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +30,33 @@ const CourseManagement = () => {
     fetchData();
   }, []);
 
+  const handleEditCourse = (course) => {
+    setEditCourse(course);
+    setShowEditModal(true);
+  };
+
+  const handleUpdateCourse = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:9000/course/${editCourse._id}`,
+        editCourse,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Cập nhật khóa học thành công!");
+      const response = await axios.get("http://localhost:9000/course");
+      setCourses(response.data);
+      setEditCourse(null);
+      setShowEditModal(false);
+    } catch (error) {
+      console.error("Lỗi khi cập nhật khóa học:", error);
+    }
+  };
+
   const handleDeleteCourse = async (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa khóa học này?")) {
       try {
@@ -46,43 +75,18 @@ const CourseManagement = () => {
     }
   };
 
-  const handleEditCourse = (course) => {
-    setEditCourse(course);
-  };
-
-  const handleSaveEdit = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:9000/course/${editCourse._id}`,
-        editCourse,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      alert("Cập nhật khóa học thành công!");
-      const updatedCourses = courses.map((course) =>
-        course._id === editCourse._id ? editCourse : course
-      );
-      setCourses(updatedCourses);
-      setEditCourse(null);
-    } catch (error) {
-      console.error("Lỗi khi cập nhật khóa học:", error);
-    }
-  };
-
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading)
+    return <div className="course-management-loading">Loading...</div>;
+  if (error)
+    return <div className="course-management-error">Error: {error}</div>;
 
   return (
     <div className="d-flex">
       <SidebarAdmin />
       <div className="course-management-container">
-        <h2>Danh sách khóa học</h2>
-        <div className="table-container">
-          <table className="table">
+        <h2>Quản lý khóa học</h2>
+        <div className="course-management-table-container">
+          <table className="course-management-table">
             <thead>
               <tr>
                 <th>STT</th>
@@ -92,7 +96,7 @@ const CourseManagement = () => {
                 <th>Giá gốc</th>
                 <th>Giá khuyến mãi</th>
                 <th>Danh mục</th>
-                <th>Hành động</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -110,120 +114,142 @@ const CourseManagement = () => {
                     )?.categoryname || "Không xác định"}
                   </td>
                   <td>
-                    <button
-                      className="btn-edit"
+                    <FaEdit
+                      className="course-management-icon-edit"
                       onClick={() => handleEditCourse(course)}
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      className="btn-delete"
+                      title="Sửa"
+                    />
+                    <FaTrash
+                      className="course-management-icon-delete"
                       onClick={() => handleDeleteCourse(course._id)}
-                    >
-                      Xóa
-                    </button>
+                      title="Xóa"
+                    />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {editCourse && (
-          <div className="edit-course-modal">
-            <h3>Chỉnh sửa khóa học</h3>
-            <form>
-              <div className="form-group">
-                <label htmlFor="courseName">Tên khóa học</label>
-                <input
-                  type="text"
-                  id="courseName"
-                  name="courseName"
-                  value={editCourse.courseName}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, courseName: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="duration">Thời lượng</label>
-                <input
-                  type="text"
-                  id="duration"
-                  name="duration"
-                  value={editCourse.duration}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, duration: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="instructor">Giảng viên</label>
-                <input
-                  type="text"
-                  id="instructor"
-                  name="instructor"
-                  value={editCourse.instructor}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, instructor: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="oprice">Giá gốc</label>
-                <input
-                  type="number"
-                  id="oprice"
-                  name="oprice"
-                  value={editCourse.oprice}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, oprice: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="price">Giá khuyến mãi</label>
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  value={editCourse.price}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, price: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="categoryid">Danh mục</label>
-                <select
-                  id="categoryid"
-                  name="categoryid"
-                  value={editCourse.categoryid}
-                  onChange={(e) =>
-                    setEditCourse({ ...editCourse, categoryid: e.target.value })
-                  }
+        {showEditModal && editCourse && (
+          <div className="course-management-edit-modal">
+            <div className="course-management-edit-modal-content">
+              <h3>Chỉnh sửa khóa học</h3>
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-courseName">Tên khóa học</label>
+                  <input
+                    type="text"
+                    id="edit-courseName"
+                    name="courseName"
+                    value={editCourse.courseName}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        courseName: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-duration">Thời lượng</label>
+                  <input
+                    type="text"
+                    id="edit-duration"
+                    name="duration"
+                    value={editCourse.duration}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        duration: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-instructor">Giảng viên</label>
+                  <input
+                    type="text"
+                    id="edit-instructor"
+                    name="instructor"
+                    value={editCourse.instructor}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        instructor: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-oprice">Giá gốc</label>
+                  <input
+                    type="text"
+                    id="edit-oprice"
+                    name="oprice"
+                    value={editCourse.oprice}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        oprice: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-price">Giá khuyến mãi</label>
+                  <input
+                    type="text"
+                    id="edit-price"
+                    name="price"
+                    value={editCourse.price}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        price: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-categoryid">Danh mục</label>
+                  <select
+                    id="edit-categoryid"
+                    name="categoryid"
+                    value={editCourse.categoryid}
+                    onChange={(e) =>
+                      setEditCourse({
+                        ...editCourse,
+                        categoryid: e.target.value,
+                      })
+                    }
+                    required
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.categoryid} value={cat.categoryid}>
+                        {cat.categoryname}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  className="course-management-btn-save"
+                  onClick={handleUpdateCourse}
                 >
-                  {categories.map((category) => (
-                    <option key={category._id} value={category.categoryid}>
-                      {category.categoryname}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button
-                type="button"
-                className="btn-save"
-                onClick={handleSaveEdit}
-              >
-                Lưu thay đổi
-              </button>
-              <button
-                type="button"
-                className="btn-cancel"
-                onClick={() => setEditCourse(null)}
-              >
-                Hủy
-              </button>
-            </form>
+                  Lưu thay đổi
+                </button>
+                <button
+                  className="course-management-btn-cancel"
+                  onClick={() => setShowEditModal(false)}
+                >
+                  Hủy
+                </button>
+              </form>
+            </div>
           </div>
         )}
       </div>

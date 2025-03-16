@@ -1,6 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import connectDB from "./config/connectDB.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import announcementRoutes from "./routes/announcementRoutes.js";
@@ -13,6 +16,14 @@ const app = express();
 connectDB();
 app.use(cors());
 app.use(express.json());
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Serve static files from the "img" directory
+app.use('/img', express.static(path.join(__dirname, '../frontend/src/img')));
+
 app.use("/course", courseRoutes);
 app.use("/announcements", announcementRoutes);
 app.use("/category", categoryRoutes);

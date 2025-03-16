@@ -16,14 +16,22 @@ const CourseDetail = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
-    const fetchCourseDetails = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
+        // Lấy thông tin khóa học
+        const { data } = await axios.get(
           `http://localhost:9000/course/slug/${slug}`
         );
-        setCourse(response.data);
-        setDescription(response.data.description);
-        setDetails(response.data.details);
+        setCourse(data);
+        setDescription(data.description);
+        setDetails(data.details);
+
+        // Kiểm tra người dùng từ localStorage
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser) {
+          setUser(storedUser);
+          setIsAdmin(storedUser.roleid === 1);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -31,14 +39,12 @@ const CourseDetail = () => {
       }
     };
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-    setIsAdmin(storedUser && storedUser.roleid === 1);
-
-    fetchCourseDetails();
+    fetchData();
   }, [slug]);
 
   const handleEdit = async () => {
+    if (!window.confirm("Bạn có chắc muốn cập nhật nội dung khóa học?")) return;
+
     try {
       await axios.put(`http://localhost:9000/course/${slug}/content`, {
         description,
@@ -47,10 +53,16 @@ const CourseDetail = () => {
       alert("Cập nhật thành công!");
     } catch (error) {
       console.error("Lỗi khi cập nhật:", error);
+      alert("Có lỗi xảy ra khi cập nhật nội dung.");
     }
   };
 
   const handleEnroll = async () => {
+    if (!user) {
+      alert("Vui lòng đăng nhập để đăng ký khóa học.");
+      return;
+    }
+
     try {
       await axios.post(`http://localhost:9000/enrollments`, {
         userId: user._id,
@@ -59,11 +71,12 @@ const CourseDetail = () => {
       alert("Đăng ký khóa học thành công!");
     } catch (error) {
       console.error("Lỗi khi đăng ký khóa học:", error);
+      alert("Đăng ký khóa học thất bại.");
     }
   };
 
   if (loading) return <div className="loading">Chờ xíu...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
+  if (error) return <div className="error">Lỗi: {error}</div>;
 
   return (
     <div className="course-detail-page">
@@ -73,9 +86,11 @@ const CourseDetail = () => {
         setShowLogin={setShowLogin}
         fullWidth={true}
       />
+
       <div className="container">
         <div className="course-content">
           <h2 className="course-title">{course.courseName}</h2>
+
           <div className="course-info">
             <p>
               <strong>Thời lượng:</strong> {course.duration}
@@ -88,6 +103,7 @@ const CourseDetail = () => {
               <strong className="discount-price"> {course.price}đ</strong>
             </p>
           </div>
+
           <div className="course-description">
             <h3>Mô tả</h3>
             {isAdmin ? (
@@ -96,9 +112,10 @@ const CourseDetail = () => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             ) : (
-              <p>{description}</p>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
             )}
           </div>
+
           <div className="course-details">
             <h3>Chi tiết</h3>
             {isAdmin ? (
@@ -107,14 +124,16 @@ const CourseDetail = () => {
                 onChange={(e) => setDetails(e.target.value)}
               />
             ) : (
-              <p>{details}</p>
+              <div dangerouslySetInnerHTML={{ __html: details }} />
             )}
           </div>
+
           {isAdmin && (
             <button className="btn-save" onClick={handleEdit}>
               Lưu thay đổi
             </button>
           )}
+
           <div className="course-actions">
             {user && !isAdmin && (
               <button className="btn-enroll" onClick={handleEnroll}>

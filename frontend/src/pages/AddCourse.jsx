@@ -9,7 +9,7 @@ const AddCourse = () => {
     courseName: "",
     duration: "",
     instructor: "",
-    img: "",
+    img: null,
     oprice: "",
     price: "",
     categoryid: "",
@@ -33,16 +33,34 @@ const AddCourse = () => {
     setNewCourse({ ...newCourse, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setNewCourse({ ...newCourse, img: e.target.files[0] });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("courseName", newCourse.courseName);
+    formData.append("duration", newCourse.duration);
+    formData.append("instructor", newCourse.instructor);
+    formData.append("img", newCourse.img);
+    formData.append("oprice", newCourse.oprice);
+    formData.append("price", newCourse.price);
+    formData.append("categoryid", newCourse.categoryid);
+    formData.append("description", newCourse.description);
+    formData.append("details", newCourse.details);
     try {
-      await axios.post("http://localhost:9000/course", newCourse);
+      await axios.post("http://localhost:9000/course", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       alert("Thêm khóa học thành công!");
       setNewCourse({
         courseName: "",
         duration: "",
         instructor: "",
-        img: "",
+        img: null,
         oprice: "",
         price: "",
         categoryid: "",
@@ -97,14 +115,12 @@ const AddCourse = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="img">Hình ảnh URL</label>
+            <label htmlFor="img">Hình ảnh</label>
             <input
-              type="text"
+              type="file"
               id="img"
               name="img"
-              placeholder="Hình ảnh URL"
-              value={newCourse.img}
-              onChange={handleChange}
+              onChange={handleFileChange}
               required
             />
           </div>

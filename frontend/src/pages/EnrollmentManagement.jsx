@@ -61,8 +61,8 @@ const EnrollmentManagement = () => {
               {enrollments.map((enrollment, index) => (
                 <tr key={enrollment._id}>
                   <td>{index + 1}</td>
-                  <td>{enrollment.userId.fullname}</td>
-                  <td>{enrollment.courseId.courseName}</td>
+                  <td>{enrollment.userId?.fullname || "N/A"}</td>
+                  <td>{enrollment.courseId?.courseName || "N/A"}</td>
                   <td>
                     {new Date(enrollment.enrolledAt).toLocaleDateString()}
                   </td>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaEdit, FaTrash } from "react-icons/fa"; // Import icons
+import { FaEdit, FaTrash } from "react-icons/fa";
 import SidebarAdmin from "../components/SidebarAdmin";
 import "../css/CourseManagement.css";
 
@@ -11,6 +11,7 @@ const CourseManagement = () => {
   const [error, setError] = useState(null);
   const [editCourse, setEditCourse] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [imageChanged, setImageChanged] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,17 +34,31 @@ const CourseManagement = () => {
   const handleEditCourse = (course) => {
     setEditCourse(course);
     setShowEditModal(true);
+    setImageChanged(false);
   };
 
   const handleUpdateCourse = async () => {
+    const formData = new FormData();
+    formData.append("courseName", editCourse.courseName);
+    formData.append("duration", editCourse.duration);
+    formData.append("instructor", editCourse.instructor);
+    if (imageChanged) {
+      formData.append("img", editCourse.img);
+    }
+    formData.append("oprice", editCourse.oprice);
+    formData.append("price", editCourse.price);
+    formData.append("categoryid", editCourse.categoryid);
+    formData.append("description", editCourse.description);
+    formData.append("details", editCourse.details);
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:9000/course/${editCourse._id}`,
-        editCourse,
+        `http://localhost:9000/course/${editCourse.slug}`,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -57,17 +72,17 @@ const CourseManagement = () => {
     }
   };
 
-  const handleDeleteCourse = async (id) => {
+  const handleDeleteCourse = async (slug) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa khóa học này?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:9000/course/${id}`, {
+        await axios.delete(`http://localhost:9000/course/${slug}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         alert("Xóa khóa học thành công!");
-        const updatedCourses = courses.filter((course) => course._id !== id);
+        const updatedCourses = courses.filter((course) => course.slug !== slug);
         setCourses(updatedCourses);
       } catch (error) {
         console.error("Lỗi khi xóa khóa học:", error);
@@ -121,7 +136,7 @@ const CourseManagement = () => {
                     />
                     <FaTrash
                       className="course-management-icon-delete"
-                      onClick={() => handleDeleteCourse(course._id)}
+                      onClick={() => handleDeleteCourse(course.slug)}
                       title="Xóa"
                     />
                   </td>
@@ -159,10 +174,7 @@ const CourseManagement = () => {
                     name="duration"
                     value={editCourse.duration}
                     onChange={(e) =>
-                      setEditCourse({
-                        ...editCourse,
-                        duration: e.target.value,
-                      })
+                      setEditCourse({ ...editCourse, duration: e.target.value })
                     }
                     required
                   />
@@ -184,6 +196,35 @@ const CourseManagement = () => {
                   />
                 </div>
                 <div className="course-management-form-group">
+                  <label htmlFor="edit-img">Hình ảnh hiện tại</label>
+                  <img
+                    src={editCourse.img || "https://via.placeholder.com/300"}
+                    alt={editCourse.courseName}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                {!imageChanged && (
+                  <div className="course-management-form-group">
+                    <label htmlFor="edit-img">Thay đổi hình ảnh</label>
+                    <input
+                      type="file"
+                      id="edit-img"
+                      name="img"
+                      onChange={(e) => {
+                        setEditCourse({
+                          ...editCourse,
+                          img: e.target.files[0],
+                        });
+                        setImageChanged(true);
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="course-management-form-group">
                   <label htmlFor="edit-oprice">Giá gốc</label>
                   <input
                     type="text"
@@ -191,10 +232,7 @@ const CourseManagement = () => {
                     name="oprice"
                     value={editCourse.oprice}
                     onChange={(e) =>
-                      setEditCourse({
-                        ...editCourse,
-                        oprice: e.target.value,
-                      })
+                      setEditCourse({ ...editCourse, oprice: e.target.value })
                     }
                     required
                   />
@@ -207,10 +245,7 @@ const CourseManagement = () => {
                     name="price"
                     value={editCourse.price}
                     onChange={(e) =>
-                      setEditCourse({
-                        ...editCourse,
-                        price: e.target.value,
-                      })
+                      setEditCourse({ ...editCourse, price: e.target.value })
                     }
                     required
                   />

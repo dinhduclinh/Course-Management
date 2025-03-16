@@ -12,7 +12,6 @@ const EnrolledCourses = () => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
-
     const fetchEnrolledCourses = async () => {
       try {
         const response = await axios.get(
@@ -25,7 +24,6 @@ const EnrolledCourses = () => {
         setLoading(false);
       }
     };
-
     fetchEnrolledCourses();
   }, []);
 
@@ -45,21 +43,23 @@ const EnrolledCourses = () => {
               <div key={enrollment._id} className="enrolled-course-item">
                 <img
                   src={
-                    enrollment.courseId.img || "https://via.placeholder.com/300"
+                    enrollment.courseId?.img ||
+                    "https://via.placeholder.com/300"
                   }
-                  alt={enrollment.courseId.courseName}
+                  alt={enrollment.courseId?.courseName || "Course"}
                 />
                 <div className="enrolled-course-info">
-                  <h5>{enrollment.courseId.courseName}</h5>
+                  <h5>{enrollment.courseId?.courseName || "Course Name"}</h5>
                   <p>
-                    <strong>Thời lượng:</strong> {enrollment.courseId.duration}
+                    <strong>Thời lượng:</strong>{" "}
+                    {enrollment.courseId?.duration || "N/A"}
                   </p>
                   <p>
                     <strong>Giá:</strong>{" "}
-                    <del>{enrollment.courseId.oprice}đ</del>
+                    <del>{enrollment.courseId?.oprice || "N/A"}đ</del>
                     <strong className="enrolled-discount-price">
                       {" "}
-                      {enrollment.courseId.price}đ
+                      {enrollment.courseId?.price || "N/A"}đ
                     </strong>
                   </p>
                 </div>

@@ -15,6 +15,7 @@ const AddCourse = () => {
     categoryid: "",
     description: "",
     details: "",
+    video: null, // Add this line
   });
 
   useEffect(() => {
@@ -37,6 +38,10 @@ const AddCourse = () => {
     setNewCourse({ ...newCourse, img: e.target.files[0] });
   };
 
+  const handleVideoChange = (e) => {
+    setNewCourse({ ...newCourse, video: e.target.files[0] });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -49,6 +54,7 @@ const AddCourse = () => {
     formData.append("categoryid", newCourse.categoryid);
     formData.append("description", newCourse.description);
     formData.append("details", newCourse.details);
+    formData.append("video", newCourse.video); // Add this line
     try {
       await axios.post("http://localhost:9000/course", formData, {
         headers: {
@@ -66,6 +72,7 @@ const AddCourse = () => {
         categoryid: "",
         description: "",
         details: "",
+        video: null, // Add this line
       });
     } catch (error) {
       console.error("Lỗi khi thêm khóa học:", error);
@@ -121,6 +128,16 @@ const AddCourse = () => {
               id="img"
               name="img"
               onChange={handleFileChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="video">Video Demo</label>
+            <input
+              type="file"
+              id="video"
+              name="video"
+              onChange={handleVideoChange}
               required
             />
           </div>

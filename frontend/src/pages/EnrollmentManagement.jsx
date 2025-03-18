@@ -34,6 +34,7 @@ const EnrollmentManagement = () => {
         setEnrollments(updatedEnrollments);
       } catch (error) {
         console.error("Lỗi khi xóa đăng ký:", error);
+        alert(error.response.data.message);
       }
     }
   };

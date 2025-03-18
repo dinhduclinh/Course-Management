@@ -12,6 +12,7 @@ const CourseManagement = () => {
   const [editCourse, setEditCourse] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [imageChanged, setImageChanged] = useState(false);
+  const [videoChanged, setVideoChanged] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +36,7 @@ const CourseManagement = () => {
     setEditCourse(course);
     setShowEditModal(true);
     setImageChanged(false);
+    setVideoChanged(false);
   };
 
   const handleUpdateCourse = async () => {
@@ -44,6 +46,9 @@ const CourseManagement = () => {
     formData.append("instructor", editCourse.instructor);
     if (imageChanged) {
       formData.append("img", editCourse.img);
+    }
+    if (videoChanged) {
+      formData.append("video", editCourse.video);
     }
     formData.append("oprice", editCourse.oprice);
     formData.append("price", editCourse.price);
@@ -220,6 +225,36 @@ const CourseManagement = () => {
                           img: e.target.files[0],
                         });
                         setImageChanged(true);
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="course-management-form-group">
+                  <label htmlFor="edit-video">Video hiện tại</label>
+                  <video
+                    src={editCourse.video || "https://via.placeholder.com/300"}
+                    alt={editCourse.courseName}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                    }}
+                    controls
+                  />
+                </div>
+                {!videoChanged && (
+                  <div className="course-management-form-group">
+                    <label htmlFor="edit-video">Thay đổi video</label>
+                    <input
+                      type="file"
+                      id="edit-video"
+                      name="video"
+                      onChange={(e) => {
+                        setEditCourse({
+                          ...editCourse,
+                          video: e.target.files[0],
+                        });
+                        setVideoChanged(true);
                       }}
                     />
                   </div>

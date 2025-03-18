@@ -1,4 +1,5 @@
 import Enrollment from "../models/Enrollment.js";
+import Course from "../models/Course.js"; // Ensure you import the Course model
 import mongoose from "mongoose";
 
 export const getEnrollments = async (req, res) => {
@@ -32,6 +33,24 @@ export const createEnrollment = async (req, res) => {
 export const deleteEnrollment = async (req, res) => {
   const { id } = req.params;
   try {
+    const enrollment = await Enrollment.findById(id);
+    if (!enrollment) {
+      return res.status(404).json({ message: "Enrollment not found" });
+    }
+
+    const userEnrollments = await Enrollment.find({
+      userId: enrollment.userId,
+      courseId: enrollment.courseId,
+    });
+
+    if (userEnrollments.length <= 1) {
+      return res
+        .status(400)
+        .json({
+          message: "Cannot delete the only enrollment for this user and course",
+        });
+    }
+
     await Enrollment.findByIdAndDelete(id);
     res.status(200).json({ message: "Enrollment deleted successfully" });
   } catch (error) {

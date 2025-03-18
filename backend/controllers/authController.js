@@ -3,20 +3,30 @@ import Account from "../models/Account.js";
 export const register = async (req, res) => {
   const { username, password, fullname, email, address, dob, gender, roleid } =
     req.body;
-  // Kiểm tra độ dài mật khẩu
+
   if (password.length < 8 || password.length > 16) {
     return res
       .status(400)
       .json({ message: "Mật khẩu phải có độ dài từ 8 đến 16 ký tự." });
   }
+
+  const dobDate = new Date(dob);
+  const today = new Date();
+  if (dobDate > today) {
+    return res.status(400).json({ message: "Ngày sinh không hợp lệ." });
+  }
+
   try {
-    // Kiểm tra tính duy nhất của username
     const existingAccount = await Account.findOne({ username });
     if (existingAccount) {
-      return res.status(400).json({
-        message: "Tên đăng nhập đã tồn tại. Vui lòng chọn tên đăng nhập khác.",
-      });
+      return res
+        .status(400)
+        .json({
+          message:
+            "Tên đăng nhập đã tồn tại. Vui lòng chọn tên đăng nhập khác.",
+        });
     }
+
     // Tạo tài khoản mới
     const newAccount = new Account({
       username,
@@ -94,6 +104,14 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { fullname, email, address, dob, gender, roleid } = req.body;
+
+  // Kiểm tra ngày sinh
+  const dobDate = new Date(dob);
+  const today = new Date();
+  if (dobDate > today) {
+    return res.status(400).json({ message: "Ngày sinh không hợp lệ." });
+  }
+
   try {
     const user = await Account.findByIdAndUpdate(
       id,

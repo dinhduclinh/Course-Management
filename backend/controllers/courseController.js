@@ -11,7 +11,11 @@ const __dirname = dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../../frontend/src/img/"));
+    if (file.fieldname === "img") {
+      cb(null, path.join(__dirname, "../../frontend/src/img/"));
+    } else if (file.fieldname === "video") {
+      cb(null, path.join(__dirname, "../../frontend/src/video/"));
+    }
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -30,7 +34,7 @@ export const getCourses = async (req, res) => {
 };
 
 export const createCourse = async (req, res) => {
-  upload.single("img")(req, res, async (err) => {
+  upload.fields([{ name: "img" }, { name: "video" }])(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -45,8 +49,11 @@ export const createCourse = async (req, res) => {
       details,
     } = req.body;
     const slug = slugify(courseName, { lower: true });
-    const img = req.file
-      ? `http://localhost:9000/img/${req.file.filename}`
+    const img = req.files["img"]
+      ? `http://localhost:9000/img/${req.files["img"][0].filename}`
+      : "";
+    const video = req.files["video"]
+      ? `http://localhost:9000/video/${req.files["video"][0].filename}`
       : "";
     const course = new Course({
       courseName,
@@ -60,6 +67,7 @@ export const createCourse = async (req, res) => {
       description,
       details,
       files: [],
+      video, // Add this line
     });
     try {
       await course.save();
@@ -71,7 +79,7 @@ export const createCourse = async (req, res) => {
 };
 
 export const updateCourse = async (req, res) => {
-  upload.single("img")(req, res, async (err) => {
+  upload.fields([{ name: "img" }, { name: "video" }])(req, res, async (err) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -86,9 +94,12 @@ export const updateCourse = async (req, res) => {
       description,
       details,
     } = req.body;
-    const img = req.file
-      ? `http://localhost:9000/img/${req.file.filename}`
+    const img = req.files["img"]
+      ? `http://localhost:9000/img/${req.files["img"][0].filename}`
       : req.body.img;
+    const video = req.files["video"]
+      ? `http://localhost:9000/video/${req.files["video"][0].filename}`
+      : req.body.video;
     try {
       const updatedCourse = await Course.findOneAndUpdate(
         { slug },
@@ -102,6 +113,7 @@ export const updateCourse = async (req, res) => {
           categoryid,
           description,
           details,
+          video,
         },
         { new: true }
       );
@@ -127,6 +139,16 @@ export const deleteCourse = async (req, res) => {
       );
       if (fs.existsSync(imgPath)) {
         fs.unlinkSync(imgPath);
+      }
+    }
+    if (course.video) {
+      const videoPath = path.join(
+        __dirname,
+        "../../frontend/src/video/",
+        course.video.split("/").pop()
+      );
+      if (fs.existsSync(videoPath)) {
+        fs.unlinkSync(videoPath);
       }
     }
     await Course.findOneAndDelete({ slug });

@@ -18,15 +18,12 @@ const CourseDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Lấy thông tin khóa học
         const { data } = await axios.get(
           `http://localhost:9000/course/slug/${slug}`
         );
         setCourse(data);
         setDescription(data.description);
         setDetails(data.details);
-
-        // Kiểm tra người dùng từ localStorage
         const storedUser = JSON.parse(localStorage.getItem("user"));
         if (storedUser) {
           setUser(storedUser);
@@ -38,13 +35,11 @@ const CourseDetail = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [slug]);
 
   const handleEdit = async () => {
     if (!window.confirm("Bạn có chắc muốn cập nhật nội dung khóa học?")) return;
-
     try {
       await axios.put(`http://localhost:9000/course/${slug}/content`, {
         description,
@@ -62,7 +57,6 @@ const CourseDetail = () => {
       alert("Vui lòng đăng nhập để đăng ký khóa học.");
       return;
     }
-
     try {
       await axios.post(`http://localhost:9000/enrollments`, {
         userId: user._id,
@@ -86,11 +80,9 @@ const CourseDetail = () => {
         setShowLogin={setShowLogin}
         fullWidth={true}
       />
-
       <div className="container">
         <div className="course-content">
           <h2 className="course-title">{course.courseName}</h2>
-
           <div className="course-info">
             <p>
               <strong>Thời lượng:</strong> {course.duration}
@@ -103,7 +95,6 @@ const CourseDetail = () => {
               <strong className="discount-price"> {course.price}đ</strong>
             </p>
           </div>
-
           <div className="course-description">
             <h3>Mô tả</h3>
             {isAdmin ? (
@@ -115,7 +106,6 @@ const CourseDetail = () => {
               <div dangerouslySetInnerHTML={{ __html: description }} />
             )}
           </div>
-
           <div className="course-details">
             <h3>Chi tiết</h3>
             {isAdmin ? (
@@ -127,13 +117,11 @@ const CourseDetail = () => {
               <div dangerouslySetInnerHTML={{ __html: details }} />
             )}
           </div>
-
           {isAdmin && (
             <button className="btn-save" onClick={handleEdit}>
               Lưu thay đổi
             </button>
           )}
-
           <div className="course-actions">
             {user && !isAdmin && (
               <button className="btn-enroll" onClick={handleEnroll}>
@@ -141,6 +129,15 @@ const CourseDetail = () => {
               </button>
             )}
           </div>
+          {course.video && (
+            <div className="course-video">
+              <h3>Video Demo</h3>
+              <video controls width="100%">
+                <source src={course.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
         </div>
       </div>
     </div>

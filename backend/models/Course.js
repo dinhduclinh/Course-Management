@@ -12,6 +12,7 @@ const courseSchema = new mongoose.Schema({
   description: { type: String, required: true },
   details: { type: String, required: true },
   files: [{ filename: String, path: String }],
+  video: { type: String, default: "" },
 });
 
 const Course = mongoose.model("Course", courseSchema, "Courses");

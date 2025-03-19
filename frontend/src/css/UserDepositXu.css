@@ -1,0 +1,46 @@
+/* frontend/src/css/UserDepositXu.css */
+.user-deposit-xu-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.user-deposit-xu-container {
+    max-width: 400px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.user-deposit-xu-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.btn-deposit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-deposit:hover {
+    background-color: #45a049;
+}

@@ -1,0 +1,44 @@
+/* frontend/src/css/AdminDepositXu.css */
+.admin-deposit-xu-container {
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    margin-left: 220px; /* Adjust this value based on the width of the sidebar */
+}
+
+.admin-deposit-xu-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-deposit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.btn-deposit:hover {
+    background-color: #45a049;
+}

@@ -1,3 +1,4 @@
+// frontend/src/pages/EnrolledCourses.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
@@ -26,6 +27,26 @@ const EnrolledCourses = () => {
     };
     fetchEnrolledCourses();
   }, []);
+
+  const handlePayment = async (enrollmentId) => {
+    if (window.confirm("Bạn có chắc chắn muốn thanh toán khóa học này?")) {
+      try {
+        await axios.post(
+          `http://localhost:9000/enrollments/pay/${enrollmentId}`
+        );
+        alert("Thanh toán thành công!");
+        const updatedEnrollments = enrolledCourses.map((enrollment) =>
+          enrollment._id === enrollmentId
+            ? { ...enrollment, paid: true }
+            : enrollment
+        );
+        setEnrolledCourses(updatedEnrollments);
+      } catch (error) {
+        console.error("Lỗi khi thanh toán:", error);
+        alert(error.response.data.message);
+      }
+    }
+  };
 
   if (loading) return <div className="enrolled-loading">Loading...</div>;
   if (error) return <div className="enrolled-error">Error: {error}</div>;
@@ -62,6 +83,14 @@ const EnrolledCourses = () => {
                       {enrollment.courseId?.price || "N/A"}đ
                     </strong>
                   </p>
+                  {!enrollment.paid && (
+                    <button
+                      className="btn-pay"
+                      onClick={() => handlePayment(enrollment._id)}
+                    >
+                      Thanh toán
+                    </button>
+                  )}
                 </div>
               </div>
             ))

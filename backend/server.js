@@ -10,6 +10,7 @@ import announcementRoutes from "./routes/announcementRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+import walletRoutes from "./routes/walletRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -31,6 +32,7 @@ app.use("/announcements", announcementRoutes);
 app.use("/category", categoryRoutes);
 app.use("/auth", authRoutes);
 app.use("/enrollments", enrollmentRoutes);
+app.use("/wallet", walletRoutes);
 
 const HOST = process.env.HOSTNAME || "localhost";
 const PORT = process.env.PORT || 9000;

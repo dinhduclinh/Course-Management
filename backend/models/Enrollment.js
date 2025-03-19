@@ -1,3 +1,4 @@
+// backend/models/Enrollment.js
 import mongoose from "mongoose";
 
 const enrollmentSchema = new mongoose.Schema({
@@ -12,6 +13,7 @@ const enrollmentSchema = new mongoose.Schema({
     required: true,
   },
   enrolledAt: { type: Date, default: Date.now },
+  paid: { type: Boolean, default: false }, 
 });
 
 const Enrollment = mongoose.model("Enrollment", enrollmentSchema);

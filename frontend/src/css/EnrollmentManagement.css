@@ -1,58 +1,59 @@
+/* frontend/src/css/EnrollmentManagement.css */
 .enrollment-management-container {
-  padding: 20px;
-  flex: 1;
-  background-color: #f9f9f9;
-  margin-left: 220px;
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+    margin-left: 220px;
 }
 
 .table-container {
-  margin-top: 20px;
-  overflow-x: auto;
+    margin-top: 20px;
+    overflow-x: auto;
 }
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
 .table th,
 .table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
 .table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 .table tr:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .icon-delete {
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: color 0.2s ease-in-out;
-  color: #ff4d4d;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: color 0.2s ease-in-out;
+    color: #ff4d4d;
 }
 
 .icon-delete:hover {
-  color: #ff1a1a;
+    color: #ff1a1a;
 }
 
 .loading {
-  font-size: 30px;
-  text-align: center;
-  margin-top: 50px;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 50px;
 }
 
 .error {
-  color: red;
-  font-size: 20px;
-  text-align: center;
-  margin-top: 50px;
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 50px;
 }

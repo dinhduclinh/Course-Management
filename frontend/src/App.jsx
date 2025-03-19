@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -20,6 +21,8 @@ import AddUser from "./pages/AddUser";
 import AddEnrollment from "./pages/AddEnrollment";
 import AddCategory from "./pages/AddCategory";
 import CategoryManagement from "./pages/CategoryManagement";
+import AdminDepositXu from "./pages/AdminDepositXu";
+import UserDepositXu from "./pages/UserDepositXu";
 
 const App = () => {
   const isAdmin = () => {
@@ -73,6 +76,11 @@ const App = () => {
           path="/category-management"
           element={<ProtectedRoute element={<CategoryManagement />} />}
         />
+        <Route
+          path="/admin-deposit-xu"
+          element={<ProtectedRoute element={<AdminDepositXu />} />}
+        />
+        <Route path="/user-deposit-xu" element={<UserDepositXu />} />
       </Routes>
     </Router>
   );

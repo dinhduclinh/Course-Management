@@ -1,3 +1,4 @@
+// frontend/src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMale, faFemale } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +16,7 @@ const Navbar = ({ fullWidth }) => {
   const [announcementMessage, setAnnouncementMessage] = useState(
     "Đang tải thông báo..."
   );
+  const [xu, setXu] = useState(0); // State to hold xu
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +39,23 @@ const Navbar = ({ fullWidth }) => {
     };
     fetchAnnouncement();
   }, []);
+
+  useEffect(() => {
+    // Lấy số xu từ API
+    const fetchXu = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `http://localhost:9000/wallet/${user._id}`
+          );
+          setXu(response.data.xu);
+        } catch (error) {
+          console.error("Lỗi khi lấy số xu:", error);
+        }
+      }
+    };
+    fetchXu();
+  }, [user]);
 
   const handleLoginSuccess = (userData) => {
     setUser(userData);
@@ -63,6 +82,10 @@ const Navbar = ({ fullWidth }) => {
     navigate("/");
   };
 
+  const handleXuClick = () => {
+    navigate("/user-deposit-xu");
+  };
+
   return (
     <nav className={`navbar ${fullWidth ? "full-width" : ""}`}>
       <div
@@ -83,7 +106,6 @@ const Navbar = ({ fullWidth }) => {
           </>
         )}
         <a href="/enrolled-courses">Khóa học của tôi</a>
-        <a href="#">Học liệu</a>
         <a href="#">Coupon</a>
         {user ? (
           <div className="user-dropdown">
@@ -115,6 +137,12 @@ const Navbar = ({ fullWidth }) => {
           </a>
         )}
         <span className="cart-icon">🛒</span>
+        {user && (
+          <span className="xu-icon" onClick={handleXuClick}>
+            Xu: {xu}
+          </span>
+        )}{" "}
+        {/* Display xu */}
       </div>
       {showLogin && (
         <LoginPopup

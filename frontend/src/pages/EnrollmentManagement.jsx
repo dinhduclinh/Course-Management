@@ -1,3 +1,4 @@
+// frontend/src/pages/EnrollmentManagement.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa"; // Import the delete icon
@@ -55,6 +56,7 @@ const EnrollmentManagement = () => {
                 <th>Tên người dùng</th>
                 <th>Tên khóa học</th>
                 <th>Ngày đăng ký</th>
+                <th>Trạng thái thanh toán</th>
                 <th></th>
               </tr>
             </thead>
@@ -66,6 +68,9 @@ const EnrollmentManagement = () => {
                   <td>{enrollment.courseId?.courseName || "N/A"}</td>
                   <td>
                     {new Date(enrollment.enrolledAt).toLocaleDateString()}
+                  </td>
+                  <td>
+                    {enrollment.paid ? "Đã thanh toán" : "Chưa thanh toán"}
                   </td>
                   <td>
                     <FaTrash

@@ -1,3 +1,4 @@
+// frontend/src/components/SidebarAdmin.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa"; // Icon đóng/mở
@@ -83,6 +84,9 @@ const SidebarAdmin = () => {
           </Link>
           <Link to="/add-user" className="nav-link">
             Thêm người dùng
+          </Link>
+          <Link to="/admin-deposit-xu" className="nav-link">
+            Nạp Xu cho Người Dùng
           </Link>
         </div>
       </div>
